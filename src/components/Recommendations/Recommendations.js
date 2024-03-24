@@ -1,4 +1,4 @@
-import { createObserver } from "/src/utils/scroll-observer.js";
+import { createObserver } from "../../utils/scroll-observer.js";
 
 export default class Recommendations extends HTMLElement {
     constructor() {
