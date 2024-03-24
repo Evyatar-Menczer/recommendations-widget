@@ -1,9 +1,9 @@
-import { getRecommendations } from "../api/getRecommedations.js";
-import Recommendations from "../components/Recommendations/Recommendations.js";
-import RecommendationItem from "../components/RecommendationItem/RecommendationItem.js";
-import MoreForYou from "../components/MoreForYou/MoreForYou.js";
-import SlideBar from "../components/SlideBar/SlideBar.js";
-import Loader from "../components/Loader.js";
+import { getRecommendations } from "/src/api/getRecommedations.js";
+import Recommendations from "/src/components/Recommendations/Recommendations.js";
+import RecommendationItem from "/src/components/RecommendationItem/RecommendationItem.js";
+import MoreForYou from "/src/components/MoreForYou/MoreForYou.js";
+import SlideBar from "/src/components/SlideBar/SlideBar.js";
+import Loader from "/src/components/Loader.js";
 customElements.define("recommendations-component", Recommendations);
 customElements.define("recommendation-item", RecommendationItem);
 customElements.define("more-for-you", MoreForYou);

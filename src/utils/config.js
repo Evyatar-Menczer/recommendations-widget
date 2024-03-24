@@ -1,4 +1,4 @@
-import { getSecrets } from "../api/getSecrets.js";
+import { getSecrets } from "/src/api/getSecrets.js";
 
 const secrets = getSecrets();
 export const config = {
