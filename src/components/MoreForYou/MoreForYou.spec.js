@@ -1,20 +1,14 @@
-/**
- * @jest-environment jsdom
- */
-
 import MoreForYou from "./MoreForYou.js";
 
-beforeEach(() => {
-    window.customElements.define("more-for-you", MoreForYou);
-});
+window.customElements.define("more-for-you", MoreForYou);
 
-describe("MoreForYou Web Component", () => {
+describe("MoreForYou Component", () => {
     it("should be defined as a custom element", () => {
         expect(customElements.get("more-for-you")).toBe(MoreForYou);
     });
 
     it("should render its content correctly", () => {
-        const component = new MoreForYou();
+        const component = document.createElement("more-for-you");
         document.body.appendChild(component);
 
         const shadowRoot = component.shadowRoot;
@@ -26,7 +20,6 @@ describe("MoreForYou Web Component", () => {
             "Powered By Taboola"
         );
 
-        // Check CSS styles
         const style = shadowRoot.querySelector("style").textContent;
         expect(style).toContain("#mfy-container {");
         expect(style).toContain("display: flex;");

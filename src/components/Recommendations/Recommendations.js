@@ -27,7 +27,7 @@ export default class Recommendations extends HTMLElement {
             loader.style.display = "none";
             this.currentPage++;
             this.updateComponent();
-        }, 500);
+        }, 800);
     }
 
     updateComponent() {

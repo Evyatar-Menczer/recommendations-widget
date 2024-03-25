@@ -43,7 +43,7 @@ const getFilteredRecommendations = (recommendations) => {
         const thumbnail = item.thumbnail && item.thumbnail[0];
         return (
             thumbnail &&
-            parseInt(thumbnail.width, 10) > parseInt(thumbnail.height, 10)
+            parseInt(thumbnail.width, 10) - parseInt(thumbnail.height, 10) > 300
         );
     });
     const sliderItems = filteredSlider.slice(0, 10);

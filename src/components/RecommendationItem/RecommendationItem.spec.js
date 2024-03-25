@@ -1,50 +1,40 @@
-/**
- * @jest-environment jsdom
- */
-
 import RecommendationItem from "./RecommendationItem.js";
+import { testItem1 } from "../../utils/test-utils.js";
 
-beforeEach(() => {
-    window.customElements.define("recommendation-item", RecommendationItem);
-});
+window.customElements.define("recommendation-item", RecommendationItem);
 
-describe("RecommendationItem Web Component", () => {
-    it("renders content correctly", () => {
-        const itemData = {
-            thumbnail: [{ url: "image.jpg" }],
-            name: "Test Item",
-            url: "https://example.com",
-            description: "Description here",
-            branding: "BrandName",
-        };
+describe("RecommendationItem Component", () => {
+    let element;
 
-        const component = new RecommendationItem();
-        component.item = itemData;
-        component.render();
-
-        const shadowRoot = component.shadowRoot;
-        expect(shadowRoot.querySelector(".link").textContent).toBe("Test Item");
-        expect(shadowRoot.querySelector(".link").getAttribute("href")).toBe(
-            "https://example.com"
-        );
-        expect(shadowRoot.querySelector(".sponsor").textContent).toContain(
-            "BrandName"
-        );
+    beforeEach(() => {
+        element = document.createElement("recommendation-item");
+        element.item = testItem1;
+        document.body.appendChild(element);
     });
 
-    it("handles image error correctly", () => {
-        const component = new RecommendationItem();
-        component.item = {
-            /* ... item data ... */
-        };
-        component.render();
+    it("should renders content correctly", async () => {
+        await new Promise((resolve) => setTimeout(resolve));
+        const shadowRoot = element.shadowRoot;
+        expect(shadowRoot.querySelector(".link").textContent.trim()).toBe(
+            testItem1.name
+        );
+        expect(shadowRoot.querySelector(".link").getAttribute("href")).toBe(
+            testItem1.url
+        );
+        expect(
+            shadowRoot.querySelector(".sponsor").textContent.trim()
+        ).toContain(testItem1.branding);
+    });
 
-        const shadowRoot = component.shadowRoot;
+    it("should handles image error correctly", async () => {
+        const shadowRoot = element.shadowRoot;
         const img = shadowRoot.querySelector("img");
-
-        // Simulate an image error
         img.dispatchEvent(new Event("error"));
 
         expect(shadowRoot.querySelector(".alt-text").textContent).toBe(img.alt);
+    });
+
+    afterEach(() => {
+        document.body.removeChild(element);
     });
 });

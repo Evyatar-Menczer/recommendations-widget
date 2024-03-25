@@ -27,12 +27,29 @@ export default class SlideBar extends HTMLElement {
         const description = this.shadow.querySelector(".description");
         const sponsor = this.shadow.querySelector(".sponsor");
         const slideImage = this.shadow.querySelector(".slide-image");
-
+        slideImage.innerHTML = "";
         description.innerHTML = this.currentItem.name;
         sponsor.innerHTML = this.currentItem.branding;
-        slideImage.style.backgroundImage = `url('${this.currentItem.thumbnail[0].url}')`;
-        slideImage.style.backgroundSize = "cover";
-        slideImage.style.backgroundPosition = "center";
+
+        const img = this.createImgElement();
+        slideImage.appendChild(img);
+    }
+
+    createImgElement() {
+        const img = document.createElement("img");
+        img.src = this.currentItem.thumbnail[0].url;
+        img.alt = this.currentItem.description || "";
+        img.style.width = "100%";
+        img.style.height = "100%";
+        img.onerror = () => {
+            const altTextContainer = document.createElement("div");
+            altTextContainer.classList.add("alt-text");
+            const altText = document.createElement("span");
+            altText.textContent = img.alt;
+            altTextContainer.appendChild(altText);
+            img.parentNode.replaceChild(altTextContainer, img);
+        };
+        return img;
     }
 
     attachEventListeners() {
@@ -67,20 +84,22 @@ export default class SlideBar extends HTMLElement {
         });
     }
 
-    navigate(direction) {
+    toggleDot(index, toggle) {
         this.shadow
-            .getElementById(`dot-${this.currentSlideIndex}`)
-            .classList.remove("active");
+            .getElementById(`dot-${index}`)
+            .classList.toggle("active", toggle);
+    }
+
+    navigate(direction) {
+        this.toggleDot(this.currentSlideIndex, false);
         this.currentSlideIndex += direction;
         if (this.currentSlideIndex < 0) {
             this.currentSlideIndex = this._items.length - 1;
         } else if (this.currentSlideIndex >= this._items.length) {
             this.currentSlideIndex = 0;
         }
+        this.toggleDot(this.currentSlideIndex, true);
         this.currentItem = this._items[this.currentSlideIndex];
-        this.shadow
-            .getElementById(`dot-${this.currentSlideIndex}`)
-            .classList.add("active");
         this.updateSlide();
     }
 
@@ -105,7 +124,6 @@ export default class SlideBar extends HTMLElement {
                 height: 300px;
                 background: linear-gradient(to top, black, white);
                 border-radius: 4px;
-
             }
     
             .slider-container:hover {
@@ -137,6 +155,15 @@ export default class SlideBar extends HTMLElement {
                 transform: scale(0.8); /* zoom out the image to 80% */
                 z-index: -1;
             }
+
+            .alt-text {
+                padding: 20px;
+                font-size: 1rem;
+                height: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
+
             .slider-arrow {
                 position: absolute;
                 top: 50%;
