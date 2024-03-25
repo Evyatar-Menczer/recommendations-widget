@@ -18,6 +18,18 @@ Include the widget's script tag in your HTML:
    ```
    If you wish to display the widget in a specific div, specify the id of the div in ```div-id``` attribute.
    If no divId specified, it will be attached to the end of the document.
+
+   
+### Running the Widget Locally
+
+To run the widget on your local machine:
+1. Start the server:
+   ```sh
+   npm start
+   ```
+2. Open your browser and navigate to `http://localhost:3000` (or the port provided in the console).
+   
+
    
 
 ## Running Tests
