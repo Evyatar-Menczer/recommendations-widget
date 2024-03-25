@@ -3,6 +3,9 @@
 ## Overview
 The Recommendation Widget is a web component designed to provide personalized recommendations.
 
+## Prerequisites
+- **Make sure you have a VPN connected to USA!**
+  
 ## Features
 - Dynamic loading of recommendation items.
 - Place widget where ever you want on page (using divId).
